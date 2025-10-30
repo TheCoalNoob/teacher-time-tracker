@@ -2,13 +2,14 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/fireba
 import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  databaseURL: "https://YOUR_PROJECT.firebaseio.com",
-  projectId: "YOUR_PROJECT",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyBlvjVIdmYgMTD21ewiPUzWySFZrW9r5zs",
+  authDomain: "teachertimetracker.firebaseapp.com",
+  databaseURL: "https://teachertimetracker-default-rtdb.firebaseio.com",
+  projectId: "teachertimetracker",
+  storageBucket: "teachertimetracker.firebasestorage.app",
+  messagingSenderId: "313570985747",
+  appId: "1:313570985747:web:97c492e70cf636bc55fce6",
+  measurementId: "G-1G04QPE4WE"
 };
 
 const app = initializeApp(firebaseConfig);
