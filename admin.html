@@ -2,66 +2,59 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Panel</title>
   <link rel="stylesheet" href="css/style.css">
   <script src="js/main.js"></script>
 </head>
 <body>
-  <h2>Admin Login</h2>
+  <div class="container">
+    <h2>Admin: Manage Teacher Schedules</h2>
 
-  <div id="loginDiv">
-    <input type="password" id="adminPass" placeholder="Enter admin password">
-    <button onclick="login()">Login</button>
-  </div>
-
-  <div id="adminPanel" style="display:none;">
-    <h2>Manage Teacher Schedules</h2>
     <form id="scheduleForm">
+      <input type="text" id="edp" placeholder="EDP Code" required>
       <input type="text" id="teacher" placeholder="Teacher Name" required>
-      <input type="text" id="subject" placeholder="Subject" required>
+      <input type="text" id="subject" placeholder="Course Subject" required>
+
       <select id="room" required>
         <option value="">Select Room</option>
         <option value="419G">419G</option>
         <option value="430">430</option>
         <option value="431">431</option>
       </select>
+
       <input type="time" id="start" required>
       <input type="time" id="end" required>
-      <input type="text" id="days" placeholder="MWF/TTH/SAT" required>
+      <input type="text" id="days" placeholder="MWF / TTH" required>
+
       <button type="submit">Add Schedule</button>
     </form>
 
     <table id="scheduleTable">
       <thead>
-        <tr><th>Teacher</th><th>Subject</th><th>Room</th><th>Start</th><th>End</th><th>Days</th><th>Action</th></tr>
+        <tr>
+          <th>EDP</th>
+          <th>Teacher</th>
+          <th>Subject</th>
+          <th>Room</th>
+          <th>Start</th>
+          <th>End</th>
+          <th>Days</th>
+          <th>Action</th>
+        </tr>
       </thead>
       <tbody></tbody>
     </table>
-    <button onclick="logout()">Logout</button>
+
+    <button onclick="location.href='index.html'">Back to Home</button>
   </div>
 
   <script>
-    const ADMIN_PASSWORD = "admin123"; // you can change this
-
-    function login() {
-      const pass = document.getElementById("adminPass").value;
-      if (pass === ADMIN_PASSWORD) {
-        document.getElementById("loginDiv").style.display = "none";
-        document.getElementById("adminPanel").style.display = "block";
-        loadSchedules();
-      } else {
-        alert("Incorrect password!");
-      }
-    }
-
-    function logout() {
-      document.getElementById("loginDiv").style.display = "block";
-      document.getElementById("adminPanel").style.display = "none";
-    }
-
     const form = document.getElementById("scheduleForm");
+
     form.addEventListener("submit", e => {
       e.preventDefault();
+      const edp = form.edp.value;
       const teacher = form.teacher.value;
       const subject = form.subject.value;
       const room = form.room.value;
@@ -70,7 +63,7 @@
       const days = form.days.value;
 
       let schedules = getSchedules();
-      schedules.push({ teacher, subject, room, start, end, days });
+      schedules.push({ edp, teacher, subject, room, start, end, days });
       saveSchedules(schedules);
       form.reset();
       loadSchedules();
@@ -80,9 +73,11 @@
       const table = document.querySelector("#scheduleTable tbody");
       table.innerHTML = "";
       const schedules = getSchedules();
+
       schedules.forEach((s, i) => {
         const row = document.createElement("tr");
         row.innerHTML = `
+          <td>${s.edp}</td>
           <td>${s.teacher}</td>
           <td>${s.subject}</td>
           <td>${s.room}</td>
@@ -95,12 +90,14 @@
       });
     }
 
-    function deleteSchedule(index) {
+    function deleteSchedule(i) {
       let schedules = getSchedules();
-      schedules.splice(index, 1);
+      schedules.splice(i, 1);
       saveSchedules(schedules);
       loadSchedules();
     }
+
+    loadSchedules();
   </script>
 </body>
 </html>
