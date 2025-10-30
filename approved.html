@@ -1,79 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Approved Sit-ins</title>
-  <link rel="stylesheet" href="css/style.css">
-  <script src="js/main.js"></script>
+  <link rel="stylesheet" href="css/style.css" />
+  <script type="module" src="js/approved.js" defer></script>
 </head>
 <body>
-  <h2>Approved Sit-ins</h2>
+  <div class="container">
+    <h2>Approved Sit-ins</h2>
 
-  <h3>Present Day</h3>
-  <table id="today-table">
-    <thead>
-      <tr>
-        <th>Code</th>
-        <th>Name</th>
-        <th>Year</th>
-        <th>Room</th>
-        <th>Start</th>
-        <th>End</th>
-        <th>Purpose</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+    <h3>Present Sit-ins (Today)</h3>
+    <table id="presentTable">
+      <thead>
+        <tr>
+          <th>Code</th>
+          <th>Name</th>
+          <th>Year</th>
+          <th>Room</th>
+          <th>Start</th>
+          <th>End</th>
+          <th>Purpose</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
 
-  <h3>History (Past Sit-ins)</h3>
-  <table id="history-table">
-    <thead>
-      <tr>
-        <th>Code</th>
-        <th>Name</th>
-        <th>Year</th>
-        <th>Room</th>
-        <th>Start</th>
-        <th>End</th>
-        <th>Purpose</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+    <h3>Past Sit-ins (History)</h3>
+    <table id="pastTable">
+      <thead>
+        <tr>
+          <th>Code</th>
+          <th>Name</th>
+          <th>Year</th>
+          <th>Room</th>
+          <th>Start</th>
+          <th>End</th>
+          <th>Purpose</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
 
-  <button onclick="location.href='index.html'">Back</button>
-
-  <script>
-    const todayTbody = document.querySelector("#today-table tbody");
-    const historyTbody = document.querySelector("#history-table tbody");
-    const sitins = getSitins();
-    const todayDate = new Date().toDateString();
-
-    const todayList = sitins.filter(s => new Date(s.date).toDateString() === todayDate);
-    const historyList = sitins.filter(s => new Date(s.date).toDateString() !== todayDate);
-
-    function populate(table, data) {
-      if (data.length === 0) {
-        table.innerHTML = "<tr><td colspan='7'>None</td></tr>";
-        return;
-      }
-      data.forEach(s => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-          <td><b style='color:#e74c3c;'>${s.code}</b></td>
-          <td>${s.name}</td>
-          <td>${s.year}</td>
-          <td>${s.room}</td>
-          <td>${s.start}</td>
-          <td>${s.end}</td>
-          <td>${s.purpose}</td>
-        `;
-        table.appendChild(row);
-      });
-    }
-
-    populate(todayTbody, todayList);
-    populate(historyTbody, historyList);
-  </script>
+    <button onclick="location.href='index.html'">Back</button>
+  </div>
 </body>
 </html>
