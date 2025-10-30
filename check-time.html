@@ -2,39 +2,44 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Teacher's Schedule</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Check Schedule</title>
   <link rel="stylesheet" href="css/style.css">
   <script src="js/main.js"></script>
 </head>
 <body>
-  <h2>Teacher's Schedule</h2>
+  <div class="container">
+    <h2>Teacher Schedules</h2>
 
-  <table id="schedule-table">
-    <thead>
-      <tr>
-        <th>Teacher</th>
-        <th>Subject</th>
-        <th>Room</th>
-        <th>Start Time</th>
-        <th>End Time</th>
-        <th>Days</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+    <table id="schedule-table">
+      <thead>
+        <tr>
+          <th>EDP Code</th>
+          <th>Teacher</th>
+          <th>Course Subject</th>
+          <th>Room</th>
+          <th>Start Time</th>
+          <th>End Time</th>
+          <th>Days</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
 
-  <button onclick="location.href='index.html'">Back</button>
+    <button onclick="location.href='index.html'">Back</button>
+  </div>
 
   <script>
     const tableBody = document.querySelector("#schedule-table tbody");
     const schedules = getSchedules();
 
     if (schedules.length === 0) {
-      tableBody.innerHTML = "<tr><td colspan='6'>No schedules yet. Admin can add one.</td></tr>";
+      tableBody.innerHTML = "<tr><td colspan='7'>No schedules found. Please contact the admin.</td></tr>";
     } else {
       schedules.forEach(s => {
         const row = document.createElement("tr");
         row.innerHTML = `
+          <td>${s.edp}</td>
           <td>${s.teacher}</td>
           <td>${s.subject}</td>
           <td>${s.room}</td>
