@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Teacher Time Tracker</title>
-  <link rel="stylesheet" href="css/style.css">
-  <script src="js/main.js"></script>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="js/main.js" defer></script>
 </head>
 <body>
   <div class="container">
@@ -26,8 +26,11 @@
   <script>
     // Philippine time clock
     function updateDateTime() {
-      const now = new Date().toLocaleString('en-PH', { timeZone: 'Asia/Manila', hour12: true });
-      document.getElementById('datetime').textContent = now;
+      const now = new Date().toLocaleString("en-PH", {
+        timeZone: "Asia/Manila",
+        hour12: true,
+      });
+      document.getElementById("datetime").textContent = now;
     }
     setInterval(updateDateTime, 1000);
     updateDateTime();
