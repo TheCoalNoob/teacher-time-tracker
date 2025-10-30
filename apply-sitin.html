@@ -2,41 +2,45 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Apply Sit-in</title>
   <link rel="stylesheet" href="css/style.css">
   <script src="js/main.js"></script>
 </head>
 <body>
-  <h2>Apply for Sit-in</h2>
+  <div class="container">
+    <h2>Apply for Sit-in</h2>
 
-  <form id="sitinForm">
-    <input type="text" id="name" placeholder="Name" required><br>
-    <input type="text" id="year" placeholder="Year & Section" required><br>
+    <form id="sitinForm">
+      <input type="text" id="name" placeholder="Name" required><br>
+      <input type="text" id="year" placeholder="Year & Section" required><br>
 
-    <select id="room" required>
-      <option value="">Select Room</option>
-      <option value="419G">419G</option>
-      <option value="430">430</option>
-      <option value="431">431</option>
-    </select><br>
+      <select id="room" required>
+        <option value="">Select Room</option>
+        <option value="419G">419G</option>
+        <option value="430">430</option>
+        <option value="431">431</option>
+      </select><br>
 
-    <input type="time" id="startTime" required><br>
-    <input type="time" id="endTime" required><br>
-    <input type="text" id="purpose" placeholder="Purpose" required><br>
-    <button type="submit">Submit</button>
-  </form>
+      <input type="time" id="startTime" required><br>
+      <input type="time" id="endTime" required><br>
+      <input type="text" id="purpose" placeholder="Purpose" required><br>
 
-  <button onclick="location.href='index.html'">Back</button>
+      <button type="submit">Submit</button>
+    </form>
+
+    <button onclick="location.href='index.html'">Back</button>
+  </div>
 
   <script>
     document.getElementById("sitinForm").addEventListener("submit", e => {
       e.preventDefault();
-      const name = document.getElementById("name").value;
-      const year = document.getElementById("year").value;
-      const room = document.getElementById("room").value;
-      const start = document.getElementById("startTime").value;
-      const end = document.getElementById("endTime").value;
-      const purpose = document.getElementById("purpose").value;
+      const name = nameInput.value;
+      const year = yearInput.value;
+      const room = roomInput.value;
+      const start = startInput.value;
+      const end = endInput.value;
+      const purpose = purposeInput.value;
 
       const schedules = getSchedules();
       let available = true;
@@ -51,18 +55,24 @@
       }
 
       if (available) {
-        const sitins = getSitins();
         const code = generateCode();
-        const now = new Date();
-        sitins.push({ code, name, year, room, start, end, purpose, date: now });
+        const sitins = getSitins();
+        sitins.push({ code, name, year, room, start, end, purpose, date: new Date() });
         saveSitins(sitins);
-        alert(`✅ Approved! Your Sit-in Code: ${code}`);
+        alert(`✅ Approved! Sit-in Code: ${code}`);
       } else {
-        alert("❌ Not Available! Room has a scheduled class during that time.");
+        alert("❌ Room not available during that time.");
       }
 
       e.target.reset();
     });
+
+    const nameInput = document.getElementById("name");
+    const yearInput = document.getElementById("year");
+    const roomInput = document.getElementById("room");
+    const startInput = document.getElementById("startTime");
+    const endInput = document.getElementById("endTime");
+    const purposeInput = document.getElementById("purpose");
   </script>
 </body>
 </html>
