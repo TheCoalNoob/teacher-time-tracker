@@ -1,14 +1,15 @@
 body {
   font-family: Arial, sans-serif;
-  text-align: center;
-  background-color: #f4f4f4;
+  background: #f7f7f7;
   margin: 0;
-  padding: 20px;
+  padding: 0;
+  text-align: center;
 }
 
 .container {
-  max-width: 600px;
+  max-width: 700px;
   margin: auto;
+  padding: 20px;
 }
 
 h1, h2 {
@@ -17,40 +18,55 @@ h1, h2 {
 
 button {
   padding: 10px 20px;
-  margin: 10px;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
+  margin: 5px;
   background-color: #3498db;
   color: white;
+  border: none;
+  border-radius: 6px;
   cursor: pointer;
 }
-
 button:hover {
   background-color: #2980b9;
 }
 
 table {
-  width: 90%;
-  margin: 20px auto;
+  width: 100%;
   border-collapse: collapse;
+  margin: 15px 0;
   background: white;
 }
-
 th, td {
-  padding: 10px;
+  padding: 8px;
   border: 1px solid #ccc;
 }
-
 th {
   background: #3498db;
   color: white;
 }
 
-input {
-  margin: 5px;
+input, select {
+  width: 95%;
   padding: 8px;
-  width: 80%;
-  border-radius: 5px;
+  margin: 5px 0;
   border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Responsive for mobile */
+@media (max-width: 600px) {
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+  th {
+    display: none;
+  }
+  td {
+    position: relative;
+    padding-left: 50%;
+  }
+  td::before {
+    position: absolute;
+    left: 10px;
+    white-space: nowrap;
+  }
 }
