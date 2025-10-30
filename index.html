@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Teacher Time Tracker</title>
   <link rel="stylesheet" href="css/style.css">
+  <script src="js/main.js"></script>
 </head>
 <body>
   <div class="container">
-    <h1>Teacher Time Tracker System</h1>
-
+    <h1>Teacher Time Tracker</h1>
     <h3 id="datetime"></h3>
 
     <div class="buttons">
@@ -17,17 +17,30 @@
       <button onclick="location.href='apply-sitin.html'">Apply for Sit-in</button>
       <button onclick="location.href='approved.html'">View Approved Sit-ins</button>
     </div>
+
+    <div class="admin-login">
+      <button onclick="adminLogin()">Admin Login</button>
+    </div>
   </div>
 
   <script>
+    // Philippine time clock
     function updateDateTime() {
-      const options = { timeZone: 'Asia/Manila', hour12: true };
-      const now = new Date().toLocaleString('en-PH', options);
+      const now = new Date().toLocaleString('en-PH', { timeZone: 'Asia/Manila', hour12: true });
       document.getElementById('datetime').textContent = now;
     }
     setInterval(updateDateTime, 1000);
     updateDateTime();
+
+    function adminLogin() {
+      const username = prompt("Enter username:");
+      const password = prompt("Enter password:");
+      if (username === "admin" && password === "ilovecisco") {
+        location.href = "admin.html";
+      } else {
+        alert("Invalid credentials!");
+      }
+    }
   </script>
 </body>
 </html>
-
