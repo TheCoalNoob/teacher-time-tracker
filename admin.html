@@ -49,32 +49,31 @@
     <button onclick="location.href='index.html'">Back to Home</button>
   </div>
 
-  <script>
-    const form = document.getElementById("scheduleForm");
+<script type="module">
+  import { saveSchedule, getSchedules, deleteSchedule } from "./js/main.js";
 
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const edp = document.getElementById("edp").value;
-      const teacher = document.getElementById("teacher").value;
-      const subject = document.getElementById("subject").value;
-      const room = document.getElementById("room").value;
-      const start = document.getElementById("start").value;
-      const end = document.getElementById("end").value;
-      const days = document.getElementById("days").value;
+  const form = document.getElementById("scheduleForm");
 
-      let schedules = getSchedules();
-      schedules.push({ edp, teacher, subject, room, start, end, days });
-      saveSchedules(schedules);
-      form.reset();
-      loadSchedules();
-    });
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const schedule = {
+      edp: form.edp.value,
+      teacher: form.teacher.value,
+      subject: form.subject.value,
+      room: form.room.value,
+      start: form.start.value,
+      end: form.end.value,
+      days: form.days.value,
+    };
+    saveSchedule(schedule);
+    form.reset();
+  });
 
-    function loadSchedules() {
-      const table = document.querySelector("#scheduleTable tbody");
+  function loadSchedules() {
+    const table = document.querySelector("#scheduleTable tbody");
+    getSchedules((schedules) => {
       table.innerHTML = "";
-      const schedules = getSchedules();
-
-      schedules.forEach((s, i) => {
+      schedules.forEach((s) => {
         const row = document.createElement("tr");
         row.innerHTML = `
           <td>${s.edp}</td>
@@ -84,20 +83,15 @@
           <td>${s.start}</td>
           <td>${s.end}</td>
           <td>${s.days}</td>
-          <td><button onclick="deleteSchedule(${i})">Delete</button></td>
+          <td><button onclick="deleteSchedule('${s.id}')">Delete</button></td>
         `;
         table.appendChild(row);
       });
-    }
+    });
+  }
 
-    function deleteSchedule(i) {
-      let schedules = getSchedules();
-      schedules.splice(i, 1);
-      saveSchedules(schedules);
-      loadSchedules();
-    }
-
-    document.addEventListener("DOMContentLoaded", loadSchedules);
-  </script>
+  window.deleteSchedule = deleteSchedule;
+  loadSchedules();
+</script>
 </body>
 </html>
