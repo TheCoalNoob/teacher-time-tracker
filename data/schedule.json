@@ -1,1 +1,4 @@
-
+[
+  { "teacher": "Engr. Gatcho", "subject": "Networking", "day": "Monday", "start": "08:00", "end": "10:00", "room": "Cisco Lab" },
+  { "teacher": "Engr. Pilones", "subject": "Programming", "day": "Monday", "start": "10:00", "end": "12:00", "room": "Lab 1" }
+]
