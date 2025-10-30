@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Panel</title>
-  <link rel="stylesheet" href="css/style.css">
-  <script src="js/main.js"></script>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="js/main.js" defer></script>
 </head>
 <body>
   <div class="container">
     <h2>Admin: Manage Teacher Schedules</h2>
 
     <form id="scheduleForm">
-      <input type="text" id="edp" placeholder="EDP Code" required>
-      <input type="text" id="teacher" placeholder="Teacher Name" required>
-      <input type="text" id="subject" placeholder="Course Subject" required>
+      <input type="text" id="edp" placeholder="EDP Code" required />
+      <input type="text" id="teacher" placeholder="Teacher Name" required />
+      <input type="text" id="subject" placeholder="Course Subject" required />
 
       <select id="room" required>
         <option value="">Select Room</option>
@@ -23,9 +23,9 @@
         <option value="431">431</option>
       </select>
 
-      <input type="time" id="start" required>
-      <input type="time" id="end" required>
-      <input type="text" id="days" placeholder="MWF / TTH" required>
+      <input type="time" id="start" required />
+      <input type="time" id="end" required />
+      <input type="text" id="days" placeholder="MWF / TTH" required />
 
       <button type="submit">Add Schedule</button>
     </form>
@@ -52,15 +52,15 @@
   <script>
     const form = document.getElementById("scheduleForm");
 
-    form.addEventListener("submit", e => {
+    form.addEventListener("submit", (e) => {
       e.preventDefault();
-      const edp = form.edp.value;
-      const teacher = form.teacher.value;
-      const subject = form.subject.value;
-      const room = form.room.value;
-      const start = form.start.value;
-      const end = form.end.value;
-      const days = form.days.value;
+      const edp = document.getElementById("edp").value;
+      const teacher = document.getElementById("teacher").value;
+      const subject = document.getElementById("subject").value;
+      const room = document.getElementById("room").value;
+      const start = document.getElementById("start").value;
+      const end = document.getElementById("end").value;
+      const days = document.getElementById("days").value;
 
       let schedules = getSchedules();
       schedules.push({ edp, teacher, subject, room, start, end, days });
@@ -97,7 +97,7 @@
       loadSchedules();
     }
 
-    loadSchedules();
+    document.addEventListener("DOMContentLoaded", loadSchedules);
   </script>
 </body>
 </html>
