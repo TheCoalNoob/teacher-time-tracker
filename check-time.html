@@ -29,30 +29,31 @@
     <button onclick="location.href='index.html'">Back</button>
   </div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const tableBody = document.querySelector("#schedule-table tbody");
-      const schedules = getSchedules();
+<script type="module">
+  import { getSchedules } from "./js/main.js";
 
-      if (schedules.length === 0) {
-        tableBody.innerHTML =
-          "<tr><td colspan='7'>No schedules found. Please contact the admin.</td></tr>";
-      } else {
-        schedules.forEach((s) => {
-          const row = document.createElement("tr");
-          row.innerHTML = `
-            <td>${s.edp}</td>
-            <td>${s.teacher}</td>
-            <td>${s.subject}</td>
-            <td>${s.room}</td>
-            <td>${s.start}</td>
-            <td>${s.end}</td>
-            <td>${s.days}</td>
-          `;
-          tableBody.appendChild(row);
-        });
-      }
-    });
-  </script>
+  const tableBody = document.querySelector("#schedule-table tbody");
+
+  getSchedules((schedules) => {
+    if (schedules.length === 0) {
+      tableBody.innerHTML = "<tr><td colspan='7'>No schedules found.</td></tr>";
+    } else {
+      tableBody.innerHTML = "";
+      schedules.forEach((s) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${s.edp}</td>
+          <td>${s.teacher}</td>
+          <td>${s.subject}</td>
+          <td>${s.room}</td>
+          <td>${s.start}</td>
+          <td>${s.end}</td>
+          <td>${s.days}</td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+  });
+</script>
 </body>
 </html>
