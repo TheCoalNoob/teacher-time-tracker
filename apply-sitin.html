@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Apply Sit-in</title>
-  <link rel="stylesheet" href="css/style.css">
-  <script src="js/main.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apply for Sit-in</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script type="module" src="js/apply-sitin.js" defer></script>
 </head>
 <body>
   <div class="container">
@@ -31,48 +31,5 @@
 
     <button onclick="location.href='index.html'">Back</button>
   </div>
-
-  <script>
-    document.getElementById("sitinForm").addEventListener("submit", e => {
-      e.preventDefault();
-      const name = nameInput.value;
-      const year = yearInput.value;
-      const room = roomInput.value;
-      const start = startInput.value;
-      const end = endInput.value;
-      const purpose = purposeInput.value;
-
-      const schedules = getSchedules();
-      let available = true;
-
-      for (let s of schedules) {
-        if (s.room === room) {
-          if (isOverlap(toMinutes(start), toMinutes(end), toMinutes(s.start), toMinutes(s.end))) {
-            available = false;
-            break;
-          }
-        }
-      }
-
-      if (available) {
-        const code = generateCode();
-        const sitins = getSitins();
-        sitins.push({ code, name, year, room, start, end, purpose, date: new Date() });
-        saveSitins(sitins);
-        alert(`✅ Approved! Sit-in Code: ${code}`);
-      } else {
-        alert("❌ Room not available during that time.");
-      }
-
-      e.target.reset();
-    });
-
-    const nameInput = document.getElementById("name");
-    const yearInput = document.getElementById("year");
-    const roomInput = document.getElementById("room");
-    const startInput = document.getElementById("startTime");
-    const endInput = document.getElementById("endTime");
-    const purposeInput = document.getElementById("purpose");
-  </script>
 </body>
 </html>
