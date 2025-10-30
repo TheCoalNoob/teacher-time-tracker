@@ -2,61 +2,48 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Apply for Sit-in</title>
+  <title>Apply Sit-in</title>
   <link rel="stylesheet" href="css/style.css">
+  <script src="js/main.js"></script>
 </head>
 <body>
   <h2>Apply for Sit-in</h2>
 
   <form id="sitinForm">
-    <label>Name:</label>
-    <input type="text" id="name" required><br>
+    <input type="text" id="name" placeholder="Name" required><br>
+    <input type="text" id="year" placeholder="Year & Section" required><br>
 
-    <label>Year & Section:</label>
-    <input type="text" id="year" required><br>
+    <select id="room" required>
+      <option value="">Select Room</option>
+      <option value="419G">419G</option>
+      <option value="430">430</option>
+      <option value="431">431</option>
+    </select><br>
 
-    <label>Room/Lab:</label>
-    <input type="text" id="room" placeholder="Cisco Lab" required><br>
-
-    <label>Start Time:</label>
     <input type="time" id="startTime" required><br>
-
-    <label>End Time:</label>
     <input type="time" id="endTime" required><br>
-
-    <label>Purpose:</label>
-    <input type="text" id="purpose" required><br>
-
+    <input type="text" id="purpose" placeholder="Purpose" required><br>
     <button type="submit">Submit</button>
   </form>
 
-  <button onclick="location.href='index.html'">Back to Home</button>
+  <button onclick="location.href='index.html'">Back</button>
 
   <script>
-    const teacherSchedules = [
-      { room: "Cisco Lab", start: "08:00", end: "10:00" },
-      { room: "Cisco Lab", start: "13:00", end: "15:00" }
-    ];
-
-    function isTimeOverlap(start1, end1, start2, end2) {
-      return (start1 < end2 && end1 > start2);
-    }
-
-    document.getElementById('sitinForm').addEventListener('submit', function(e) {
+    document.getElementById("sitinForm").addEventListener("submit", e => {
       e.preventDefault();
+      const name = document.getElementById("name").value;
+      const year = document.getElementById("year").value;
+      const room = document.getElementById("room").value;
+      const start = document.getElementById("startTime").value;
+      const end = document.getElementById("endTime").value;
+      const purpose = document.getElementById("purpose").value;
 
-      const name = document.getElementById('name').value;
-      const year = document.getElementById('year').value;
-      const room = document.getElementById('room').value;
-      const startTime = document.getElementById('startTime').value;
-      const endTime = document.getElementById('endTime').value;
-      const purpose = document.getElementById('purpose').value;
-
+      const schedules = getSchedules();
       let available = true;
 
-      for (let sched of teacherSchedules) {
-        if (sched.room.toLowerCase() === room.toLowerCase()) {
-          if (isTimeOverlap(startTime, endTime, sched.start, sched.end)) {
+      for (let s of schedules) {
+        if (s.room === room) {
+          if (isOverlap(toMinutes(start), toMinutes(end), toMinutes(s.start), toMinutes(s.end))) {
             available = false;
             break;
           }
@@ -64,18 +51,18 @@
       }
 
       if (available) {
-        alert("✅ Room is available! Sit-in request approved.");
-        // store in localStorage for viewing later
-        let sitins = JSON.parse(localStorage.getItem("sitins") || "[]");
-        sitins.push({ name, year, room, startTime, endTime, purpose });
-        localStorage.setItem("sitins", JSON.stringify(sitins));
+        const sitins = getSitins();
+        const code = generateCode();
+        const now = new Date();
+        sitins.push({ code, name, year, room, start, end, purpose, date: now });
+        saveSitins(sitins);
+        alert(`✅ Approved! Your Sit-in Code: ${code}`);
       } else {
-        alert("❌ Room is NOT available during that time. Please choose another.");
+        alert("❌ Not Available! Room has a scheduled class during that time.");
       }
 
-      document.getElementById('sitinForm').reset();
+      e.target.reset();
     });
   </script>
 </body>
 </html>
-
