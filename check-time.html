@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Check Schedule</title>
-  <link rel="stylesheet" href="css/style.css">
-  <script src="js/main.js"></script>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="js/main.js" defer></script>
 </head>
 <body>
   <div class="container">
@@ -30,26 +30,29 @@
   </div>
 
   <script>
-    const tableBody = document.querySelector("#schedule-table tbody");
-    const schedules = getSchedules();
+    document.addEventListener("DOMContentLoaded", () => {
+      const tableBody = document.querySelector("#schedule-table tbody");
+      const schedules = getSchedules();
 
-    if (schedules.length === 0) {
-      tableBody.innerHTML = "<tr><td colspan='7'>No schedules found. Please contact the admin.</td></tr>";
-    } else {
-      schedules.forEach(s => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-          <td>${s.edp}</td>
-          <td>${s.teacher}</td>
-          <td>${s.subject}</td>
-          <td>${s.room}</td>
-          <td>${s.start}</td>
-          <td>${s.end}</td>
-          <td>${s.days}</td>
-        `;
-        tableBody.appendChild(row);
-      });
-    }
+      if (schedules.length === 0) {
+        tableBody.innerHTML =
+          "<tr><td colspan='7'>No schedules found. Please contact the admin.</td></tr>";
+      } else {
+        schedules.forEach((s) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${s.edp}</td>
+            <td>${s.teacher}</td>
+            <td>${s.subject}</td>
+            <td>${s.room}</td>
+            <td>${s.start}</td>
+            <td>${s.end}</td>
+            <td>${s.days}</td>
+          `;
+          tableBody.appendChild(row);
+        });
+      }
+    });
   </script>
 </body>
 </html>
