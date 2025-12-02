@@ -7,44 +7,86 @@
   <link rel="stylesheet" href="css/style.css" />
   <script type="module" src="js/approved.js" defer></script>
 </head>
+
 <body>
   <div class="container">
     <h2>Approved Sit-ins</h2>
 
+    <!-- Loading Message -->
+    <p id="loadingMsg">Loading sit-in data...</p>
+
+    <!-- Present Sit-ins -->
     <h3>Present Sit-ins (Today)</h3>
-    <table id="presentTable">
-      <thead>
-        <tr>
-          <th>Code</th>
-          <th>Name</th>
-          <th>Year</th>
-          <th>Room</th>
-          <th>Start</th>
-          <th>End</th>
-          <th>Purpose</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+    <div class="table-wrapper">
+      <table id="presentTable">
+        <thead>
+          <tr>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Year</th>
+            <th>Room</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
 
+    <!-- Past Sit-ins -->
     <h3>Past Sit-ins (History)</h3>
-    <table id="pastTable">
-      <thead>
-        <tr>
-          <th>Code</th>
-          <th>Name</th>
-          <th>Year</th>
-          <th>Room</th>
-          <th>Start</th>
-          <th>End</th>
-          <th>Purpose</th>
-          <th>Date</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+    <div class="table-wrapper">
+      <table id="pastTable">
+        <thead>
+          <tr>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Year</th>
+            <th>Room</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>Purpose</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
 
-    <button onclick="location.href='index.html'">Back</button>
+    <button id="btnBack">Back</button>
   </div>
+
+  <script>
+    // Back Button
+    document.getElementById("btnBack").addEventListener("click", () => {
+      location.href = "index.html";
+    });
+  </script>
+
+  <style>
+    /* better table visibility on mobile */
+    .table-wrapper {
+      overflow-x: auto;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
+
+    #loadingMsg {
+      font-style: italic;
+      color: #555;
+    }
+  </style>
 </body>
 </html>
