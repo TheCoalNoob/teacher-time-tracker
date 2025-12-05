@@ -3,21 +3,60 @@ import { db } from "./firebase.js";
 import { ref, get, set, push } 
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-// Helper functions reused from main.js
+// ---------- Helpers ----------
+
+// convert "HH:MM" to minutes
 function toMinutes(t) {
   const [h, m] = t.split(":").map(Number);
   return h * 60 + m;
 }
 
+// basic time overlap check
 function isOverlap(aStart, aEnd, bStart, bEnd) {
   return aStart < bEnd && aEnd > bStart;
 }
 
+// random 8-digit code
 function generateCode() {
   return Math.floor(10000000 + Math.random() * 90000000);
 }
 
-// Form submission
+// does a schedule with given "days" string apply on "today"?
+// supports patterns like: "MWF", "TTH", "Mon", "Tue", "Fri", "Daily", etc.
+function doesScheduleApplyToday(daysStr, todayShort) {
+  if (!daysStr) {
+    // if no days are stored, assume it applies every day (old behavior)
+    return true;
+  }
+
+  const s = daysStr.toLowerCase().replace(/\s+/g, "");
+  const d = todayShort.toLowerCase(); // e.g. "mon","tue","wed","thu","fri","sat","sun"
+
+  // common patterns
+  if (s.includes("daily")) return true;
+
+  if (s.includes("mwf")) {
+    return d === "mon" || d === "wed" || d === "fri";
+  }
+
+  if (s.includes("tth")) {
+    return d === "tue" || d === "thu";
+  }
+
+  // single-day shortcuts (more flexible)
+  if (d === "mon" && (s.includes("mon") || s === "m")) return true;
+  if (d === "tue" && (s.includes("tue") || s === "t")) return true;
+  if (d === "wed" && (s.includes("wed") || s === "w")) return true;
+  if (d === "thu" && (s.includes("thu") || s === "th")) return true;
+  if (d === "fri" && (s.includes("fri") || s === "f")) return true;
+  if (d === "sat" && s.includes("sat")) return true;
+  if (d === "sun" && s.includes("sun")) return true;
+
+  return false;
+}
+
+// ---------- Form submission ----------
+
 document.getElementById("sitinForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -28,25 +67,40 @@ document.getElementById("sitinForm").addEventListener("submit", async (e) => {
   const endTime = document.getElementById("endTime").value;
   const purpose = document.getElementById("purpose").value.trim();
 
-  // Load schedule conflicts
+  // today's weekday in PH time, e.g. "Mon"
+  const todayShort = new Date().toLocaleDateString("en-PH", {
+    weekday: "short",
+    timeZone: "Asia/Manila"
+  });
+
+  // load schedules from DB
   const scheduleSnap = await get(ref(db, "schedules"));
   const schedules = scheduleSnap.val() ? Object.values(scheduleSnap.val()) : [];
 
-  for (const s of schedules) {
-    if (s.room === room) {
-      const start1 = toMinutes(startTime);
-      const end1 = toMinutes(endTime);
-      const start2 = toMinutes(s.start);
-      const end2 = toMinutes(s.end);
+  const sitStart = toMinutes(startTime);
+  const sitEnd = toMinutes(endTime);
 
-      if (isOverlap(start1, end1, start2, end2)) {
-        alert("❌ Room is NOT available during that time.");
-        return;
-      }
+  for (const s of schedules) {
+    if (s.room !== room) continue;
+
+    // try to get the schedule's day field (adjust if your key is different)
+    const scheduleDays = s.days || s.day || s.scheduleDays || "";
+
+    // 🔑 only consider schedules that actually run today
+    if (!doesScheduleApplyToday(scheduleDays, todayShort)) {
+      continue;
+    }
+
+    const schedStart = toMinutes(s.start); // assuming schedule uses "start"
+    const schedEnd = toMinutes(s.end);     // and "end"
+
+    if (isOverlap(sitStart, sitEnd, schedStart, schedEnd)) {
+      alert("❌ Room is NOT available during that time for today's schedule.");
+      return;
     }
   }
 
-  // Create sit-in entry
+  // no conflict -> approve sit-in
   const code = generateCode();
   const date = new Date().toLocaleDateString("en-PH", { timeZone: "Asia/Manila" });
 
