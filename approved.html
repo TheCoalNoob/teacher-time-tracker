@@ -248,7 +248,6 @@
                 <th>Time In</th>
                 <th>Time Out</th>
                 <th>Purpose</th>
-                <th>Date</th>
               </tr>
             </thead>
             <tbody>
@@ -274,7 +273,6 @@
                 <th>Time In</th>
                 <th>Time Out</th>
                 <th>Purpose</th>
-                <th>Date</th>
               </tr>
             </thead>
             <tbody>
@@ -297,10 +295,10 @@
             document.getElementById("content").style.display = "block";
             
             // Populate Empty State if needed (Example)
-            // Note: colspan is updated to 8 to match the new column count
+            // Note: colspan is updated to 7 to match the new column count (Date removed)
             const presentTableBody = document.querySelector("#presentTable tbody");
             if (presentTableBody && presentTableBody.children.length === 0) {
-               presentTableBody.innerHTML = `<tr><td colspan="8" class="empty-state">No active sit-ins at the moment.</td></tr>`;
+               presentTableBody.innerHTML = `<tr><td colspan="7" class="empty-state">No active sit-ins at the moment.</td></tr>`;
             }
         }, 800);
     });
