@@ -4,19 +4,180 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Approved Sit-ins</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css" />
-  <script type="module" src="js/approved.js" defer></script>
+  
+  <style>
+    :root {
+      --primary-color: #2563eb;
+      --primary-hover: #1d4ed8;
+      --text-main: #1f2937;
+      --text-light: #6b7280;
+      --bg-color: #f3f4f6;
+      --card-bg: #ffffff;
+      --border-color: #e5e7eb;
+      --success-bg: #d1fae5;
+      --success-text: #065f46;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      margin: 0;
+      padding: 40px 20px;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px; /* Wider container for data tables */
+      background: var(--card-bg);
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      font-weight: 600;
+      margin-top: 0;
+      margin-bottom: 30px;
+      color: var(--text-main);
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 12px;
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-top: 30px;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Badge style for 'Today' vs 'History' indicators if needed later */
+    .section-badge {
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 12px;
+      background-color: var(--bg-color);
+      color: var(--text-light);
+      font-weight: 500;
+    }
+
+    /* Loading Message */
+    #loadingMsg {
+      text-align: center;
+      color: var(--text-light);
+      font-style: italic;
+      padding: 20px;
+      background-color: #f9fafb;
+      border-radius: 6px;
+    }
+
+    /* Table Styling */
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto; /* Horizontal scroll on mobile */
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+      white-space: nowrap; /* Prevents awkward wrapping on small screens */
+    }
+
+    thead th {
+      text-align: left;
+      padding: 12px 16px;
+      background-color: #f9fafb;
+      color: var(--text-light);
+      font-weight: 600;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    tbody tr {
+      border-bottom: 1px solid var(--border-color);
+      transition: background-color 0.15s;
+    }
+
+    tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    tbody tr:hover {
+      background-color: #f9fafb;
+    }
+
+    td {
+      padding: 14px 16px;
+      color: var(--text-main);
+    }
+
+    /* Button Styling */
+    button {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 500;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: background-color 0.2s;
+    }
+
+    .btn-secondary {
+      background-color: white;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      margin-top: 30px;
+      display: inline-block;
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--bg-color);
+    }
+
+    /* Scrollbar styling for table wrapper */
+    .table-wrapper::-webkit-scrollbar {
+      height: 8px;
+    }
+    .table-wrapper::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 4px;
+    }
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background: #c1c1c1;
+      border-radius: 4px;
+    }
+    .table-wrapper::-webkit-scrollbar-thumb:hover {
+      background: #a8a8a8;
+    }
+
+    @media (max-width: 768px) {
+      .container { padding: 20px; }
+    }
+  </style>
 </head>
 
 <body>
   <div class="container">
     <h2>Approved Sit-ins</h2>
 
-    <!-- Loading Message -->
     <p id="loadingMsg">Loading sit-in data...</p>
 
-    <!-- Present Sit-ins -->
-    <h3>Present Sit-ins (Today)</h3>
+    <h3>
+      Present Sit-ins 
+      <span class="section-badge">Today</span>
+    </h3>
     <div class="table-wrapper">
       <table id="presentTable">
         <thead>
@@ -30,12 +191,15 @@
             <th>Purpose</th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+          </tbody>
       </table>
     </div>
 
-    <!-- Past Sit-ins -->
-    <h3>Past Sit-ins (History)</h3>
+    <h3>
+      Past Sit-ins 
+      <span class="section-badge">History</span>
+    </h3>
     <div class="table-wrapper">
       <table id="pastTable">
         <thead>
@@ -50,43 +214,21 @@
             <th>Date</th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+           </tbody>
       </table>
     </div>
 
-    <button id="btnBack">Back</button>
+    <button id="btnBack" class="btn-secondary">Back to Home</button>
   </div>
 
+  <script type="module" src="js/approved.js" defer></script>
+  
   <script>
-    // Back Button
+    // Inline script for back button if not handled in approved.js
     document.getElementById("btnBack").addEventListener("click", () => {
       location.href = "index.html";
     });
   </script>
-
-  <style>
-    /* better table visibility on mobile */
-    .table-wrapper {
-      overflow-x: auto;
-      margin-bottom: 20px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-    }
-
-    th, td {
-      border: 1px solid #ccc;
-      padding: 8px;
-      text-align: center;
-    }
-
-    #loadingMsg {
-      font-style: italic;
-      color: #555;
-    }
-  </style>
 </body>
 </html>
