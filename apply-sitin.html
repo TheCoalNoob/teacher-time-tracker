@@ -42,7 +42,7 @@
       box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 50;
     }
 
     .brand {
@@ -77,13 +77,13 @@
       flex: 1;
       display: flex;
       justify-content: center;
-      align-items: center; /* Center form vertically */
+      align-items: center;
       padding: 2rem 1rem;
     }
 
     .container {
       width: 100%;
-      max-width: 550px; /* Optimal reading width for forms */
+      max-width: 550px;
     }
 
     .page-header {
@@ -147,11 +147,38 @@
       box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
     }
 
-    /* Two-column layout for Time */
     .row-split {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1.25rem;
+    }
+
+    /* --- Checkbox & Agreement --- */
+    .agreement-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 5px;
+      font-size: 0.9rem;
+      color: var(--text-sub);
+    }
+
+    .agreement-group input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin-top: 3px;
+      cursor: pointer;
+    }
+
+    .rules-link {
+      color: var(--primary);
+      text-decoration: underline;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .rules-link:hover {
+      color: var(--primary-dark);
     }
 
     /* Buttons */
@@ -165,13 +192,84 @@
       font-size: 1rem;
       cursor: pointer;
       width: 100%;
-      margin-top: 1rem;
+      margin-top: 0.5rem;
       transition: background 0.2s, transform 0.1s;
     }
 
     .btn-primary:hover {
       background-color: var(--primary-dark);
       transform: translateY(-1px);
+    }
+
+    /* --- Modal (Popup) Styling --- */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      backdrop-filter: blur(2px);
+    }
+
+    .modal {
+      background: white;
+      padding: 2rem;
+      border-radius: var(--radius);
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      max-height: 80vh;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .modal-header h3 { margin: 0; color: var(--text-main); }
+    
+    .modal-body {
+      overflow-y: auto;
+      color: var(--text-sub);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .modal-body ul { padding-left: 20px; }
+    .modal-body li { margin-bottom: 8px; }
+
+    .close-modal-btn {
+      background: transparent;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text-sub);
+    }
+
+    .btn-agree {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.75rem;
+      border-radius: 6px;
+      margin-top: 1rem;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     /* --- Toast Notification --- */
@@ -192,20 +290,14 @@
       font-weight: 500;
       opacity: 0;
       transition: opacity 0.3s, bottom 0.3s;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
     }
 
-    #toast.show {
-      visibility: visible;
-      opacity: 1;
-      bottom: 50px;
-    }
+    #toast.show { visibility: visible; opacity: 1; bottom: 50px; }
 
-    /* Responsive */
     @media (max-width: 500px) {
       .container { max-width: 100%; }
       .row-split { grid-template-columns: 1fr; }
@@ -249,15 +341,30 @@
             <input type="text" id="year" placeholder="e.g. BSIT 3-A" required>
           </div>
 
-          <div class="form-group">
-            <label for="room">Laboratory Room</label>
-            <select id="room" required>
-              <option value="">Select Room...</option>
-              <option value="419G">419G (CAD Lab)</option>
-              <option value="430">430 (Cisco Lab)</option>
-              <option value="431">431 (Cisco Lab)</option>
-              <option value="431">410 (Micro Lab)</option>
-            </select>
+          <div class="row-split">
+            <div class="form-group">
+              <label for="room">Laboratory Room</label>
+              <select id="room" required>
+                <option value="">Select Room...</option>
+                <option value="419G">419G (CAD Lab)</option>
+                <option value="430">430 (Cisco Lab)</option>
+                <option value="431">431 (Cisco Lab)</option>
+                <option value="410">410 (Micro Lab)</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="day">Day</label>
+              <select id="day" required>
+                <option value="">Select Day...</option>
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+                <option value="Saturday">Saturday</option>
+              </select>
+            </div>
           </div>
 
           <div class="row-split">
@@ -276,10 +383,37 @@
             <input type="text" id="purpose" placeholder="e.g. Capstone Project Development" required>
           </div>
 
+          <div class="agreement-group">
+            <input type="checkbox" id="agreeRules" required>
+            <label for="agreeRules">
+              I agree to the <span class="rules-link" id="openRulesBtn">Laboratory Rules and Regulations</span> regarding equipment usage.
+            </label>
+          </div>
+
           <button type="submit" class="btn-primary">Submit Application</button>
         </form>
       </div>
 
+    </div>
+  </div>
+
+  <div id="rulesModal" class="modal-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Laboratory Rules & Regulations</h3>
+        <button class="close-modal-btn" id="closeRulesBtn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>By requesting a sit-in session, you agree to adhere to the following policies:</p>
+        <ul>
+          <li><strong>Equipment Care:</strong> Do not swap mice, keyboards, or monitors. Report any defects immediately.</li>
+          <li><strong>Cleanliness:</strong> Food and drinks are strictly prohibited inside the laboratory.</li>
+          <li><strong>Usage:</strong> Use the computer only for academic purposes (programming, research, projects). Gaming is not allowed.</li>
+          <li><strong>Noise Level:</strong> Maintain silence to avoid disturbing other students.</li>
+          <li><strong>Security:</strong> Log out of your accounts and turn off the monitor before leaving.</li>
+        </ul>
+      </div>
+      <button class="btn-agree" id="acceptRulesBtn">I Understand & Agree</button>
     </div>
   </div>
 
@@ -290,20 +424,44 @@
   <script type="module" src="js/apply-sitin.js" defer></script>
   
   <script>
-    // Inline script for UI interaction (if main.js is missing or strictly for logic)
+    // --- Logic for Modal and Form ---
     const form = document.getElementById("sitinForm");
     const toast = document.getElementById("toast");
+    
+    // Modal Elements
+    const modal = document.getElementById("rulesModal");
+    const openBtn = document.getElementById("openRulesBtn");
+    const closeBtn = document.getElementById("closeRulesBtn");
+    const acceptBtn = document.getElementById("acceptRulesBtn");
+    const checkbox = document.getElementById("agreeRules");
 
+    // Open Modal
+    openBtn.addEventListener("click", () => {
+      modal.style.display = "flex";
+    });
+
+    // Close Modal
+    closeBtn.addEventListener("click", () => {
+      modal.style.display = "none";
+    });
+
+    // Accept & Close
+    acceptBtn.addEventListener("click", () => {
+      checkbox.checked = true; // Auto-check the box
+      modal.style.display = "none";
+    });
+
+    // Close if clicking outside
+    window.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        modal.style.display = "none";
+      }
+    });
+
+    // Form Submission
     form.addEventListener("submit", (e) => {
-      // Note: If apply-sitin.js handles submission, this prevents double submission.
-      // If apply-sitin.js is pure logic, remove e.preventDefault() here if necessary.
-      // For this UI demo, we assume we want to show the toast animation.
       e.preventDefault(); 
-      
-      // Simulate API call/Logic
       showToast();
-      
-      // Reset after a delay
       setTimeout(() => {
         form.reset();
       }, 1000);
