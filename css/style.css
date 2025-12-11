@@ -1,72 +1,227 @@
+/* =========================================
+   1. Global Variables & Reset
+   ========================================= */
+:root {
+  /* Color Palette */
+  --primary-color: #2563eb;       /* Modern Blue */
+  --primary-hover: #1d4ed8;       /* Darker Blue */
+  --secondary-bg: #eff6ff;        /* Light Blue Background */
+  --text-main: #1e293b;           /* Dark Slate (easier on eyes than pure black) */
+  --text-light: #64748b;          /* Grey text */
+  --bg-body: #f1f5f9;             /* Light Grey Page Background */
+  --surface: #ffffff;             /* Card White */
+  --border-color: #cbd5e1;
+  --danger-color: #ef4444;        /* Red for delete/errors */
+
+  /* Spacing & Layout */
+  --radius: 8px;
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
-  font-family: Arial, sans-serif;
-  background: #f7f7f7;
+  font-family: 'Inter', 'Poppins', sans-serif; /* Requires Google Font Link in HTML */
+  background-color: var(--bg-body);
+  color: var(--text-main);
   margin: 0;
   padding: 0;
-  text-align: center;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centers content vertically */
 }
 
+/* =========================================
+   2. Container (Card Layout)
+   ========================================= */
 .container {
-  max-width: 700px;
-  margin: auto;
-  padding: 20px;
+  width: 90%;
+  max-width: 1000px;
+  margin: 40px auto;
+  background: var(--surface);
+  padding: 40px;
+  border-radius: 12px; /* Softer corners */
+  box-shadow: var(--shadow-md);
 }
 
-h1, h2 {
-  color: #333;
+/* =========================================
+   3. Typography
+   ========================================= */
+h1, h2, h3 {
+  color: var(--text-main);
+  margin-top: 0;
+  font-weight: 600;
 }
 
+h2 {
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #e2e8f0;
+  font-size: 1.5rem;
+}
+
+p {
+  color: var(--text-light);
+}
+
+/* =========================================
+   4. Forms (Inputs & Selects)
+   ========================================= */
+form {
+  margin-bottom: 20px;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 12px 16px;
+  margin: 8px 0 20px 0;
+  display: inline-block;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  font-size: 0.95rem;
+  font-family: inherit;
+  background-color: #fff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+
+input:focus, select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-main);
+  display: block;
+  margin-bottom: 4px;
+  text-align: left;
+}
+
+/* =========================================
+   5. Buttons
+   ========================================= */
 button {
-  padding: 10px 20px;
-  margin: 5px;
-  background-color: #3498db;
+  padding: 12px 24px;
+  margin: 5px 0;
+  background-color: var(--primary-color);
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius);
   cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
 }
+
 button:hover {
-  background-color: #2980b9;
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+/* Secondary Button Style (e.g., Back buttons) */
+button.btn-secondary, 
+button[onclick*="location.href"] { /* Auto-apply to back buttons */
+  background-color: white;
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+}
+
+button.btn-secondary:hover,
+button[onclick*="location.href"]:hover {
+  background-color: #f8fafc;
+  border-color: #94a3b8;
+}
+
+/* Delete Button */
+button.btn-delete {
+  background-color: transparent;
+  color: var(--danger-color);
+  border: 1px solid #fecaca;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+}
+
+button.btn-delete:hover {
+  background-color: #fef2f2;
+}
+
+/* =========================================
+   6. Tables
+   ========================================= */
+/* Wrapper for mobile horizontal scrolling */
+.table-wrapper {
+  overflow-x: auto;
+  margin-top: 20px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  margin: 15px 0;
   background: white;
+  font-size: 0.95rem;
+  white-space: nowrap; /* Prevents awkward wrapping on mobile */
 }
-th, td {
-  padding: 8px;
-  border: 1px solid #ccc;
+
+thead {
+  background-color: #f8fafc;
 }
+
 th {
-  background: #3498db;
-  color: white;
+  text-align: left;
+  padding: 14px 16px;
+  color: var(--text-light);
+  font-weight: 600;
+  border-bottom: 2px solid var(--border-color);
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
 }
 
-input, select {
-  width: 95%;
-  padding: 8px;
-  margin: 5px 0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #e2e8f0;
+  color: var(--text-main);
 }
 
-/* Responsive for mobile */
+tr:hover {
+  background-color: #f8fafc;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+/* =========================================
+   7. Responsive Design
+   ========================================= */
 @media (max-width: 600px) {
-  table, thead, tbody, th, td, tr {
-    display: block;
+  .container {
+    padding: 20px;
+    width: 95%;
+    margin: 20px auto;
   }
-  th {
-    display: none;
+
+  h1 { font-size: 1.5rem; }
+  h2 { font-size: 1.25rem; }
+
+  /* Stack inputs vertically */
+  form {
+    display: flex;
+    flex-direction: column;
   }
-  td {
-    position: relative;
-    padding-left: 50%;
-  }
-  td::before {
-    position: absolute;
-    left: 10px;
-    white-space: nowrap;
+
+  /* Make buttons full width on mobile */
+  button {
+    width: 100%;
+    margin: 8px 0;
   }
 }
