@@ -3,31 +3,224 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Panel</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <script src="js/main.js" defer></script>
+  <title>Admin Panel - Manage Schedules</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary-color: #2563eb;
+      --primary-hover: #1d4ed8;
+      --danger-color: #ef4444;
+      --text-main: #1f2937;
+      --text-light: #6b7280;
+      --bg-color: #f3f4f6;
+      --card-bg: #ffffff;
+      --border-color: #e5e7eb;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      margin: 0;
+      padding: 40px 20px;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1000px;
+      background: var(--card-bg);
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      font-weight: 600;
+      margin-top: 0;
+      margin-bottom: 24px;
+      color: var(--text-main);
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 10px;
+    }
+
+    /* Form Grid System */
+    form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-light);
+      margin-bottom: 6px;
+    }
+
+    input, select {
+      padding: 10px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 0.95rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+      background-color: #fff;
+      font-family: inherit;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .full-width {
+      grid-column: 1 / -1;
+    }
+
+    button {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      font-size: 0.95rem;
+    }
+
+    .btn-primary {
+      background-color: var(--primary-color);
+      color: white;
+      width: 100%;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .btn-secondary {
+      background-color: white;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      margin-top: 20px;
+      display: inline-block;
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--bg-color);
+    }
+
+    .btn-delete {
+      background-color: transparent;
+      color: var(--danger-color);
+      padding: 6px 12px;
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      font-size: 0.85rem;
+    }
+
+    .btn-delete:hover {
+      background-color: #fef2f2;
+    }
+
+    /* Table Styling */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+      margin-top: 10px;
+    }
+
+    thead th {
+      text-align: left;
+      padding: 12px 16px;
+      background-color: #f9fafb;
+      color: var(--text-light);
+      font-weight: 600;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    tbody tr {
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    tbody tr:hover {
+      background-color: #f9fafb;
+    }
+
+    td {
+      padding: 14px 16px;
+      color: var(--text-main);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .container { padding: 20px; }
+      table { display: block; overflow-x: auto; }
+    }
+  </style>
 </head>
 <body>
+
   <div class="container">
     <h2>Admin: Manage Teacher Schedules</h2>
 
     <form id="scheduleForm">
-      <input type="text" id="edp" placeholder="EDP Code" required />
-      <input type="text" id="teacher" placeholder="Teacher Name" required />
-      <input type="text" id="subject" placeholder="Course Subject" required />
+      <div class="form-group">
+        <label for="edp">EDP Code</label>
+        <input type="text" id="edp" placeholder="e.g. 12345" required />
+      </div>
 
-      <select id="room" required>
-        <option value="">Select Room</option>
-        <option value="419G">419G</option>
-        <option value="430">430</option>
-        <option value="431">431</option>
-      </select>
+      <div class="form-group">
+        <label for="teacher">Teacher Name</label>
+        <input type="text" id="teacher" placeholder="e.g. John Doe" required />
+      </div>
 
-      <input type="time" id="start" required />
-      <input type="time" id="end" required />
-      <input type="text" id="days" placeholder="MWF / TTH" required />
+      <div class="form-group">
+        <label for="subject">Course Subject</label>
+        <input type="text" id="subject" placeholder="e.g. ITE 101" required />
+      </div>
 
-      <button type="submit">Add Schedule</button>
+      <div class="form-group">
+        <label for="room">Room</label>
+        <select id="room" required>
+          <option value="">Select Room</option>
+          <option value="419G">419G</option>
+          <option value="430">430</option>
+          <option value="431">431</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="start">Start Time</label>
+        <input type="time" id="start" required />
+      </div>
+
+      <div class="form-group">
+        <label for="end">End Time</label>
+        <input type="time" id="end" required />
+      </div>
+
+      <div class="form-group">
+        <label for="days">Days</label>
+        <input type="text" id="days" placeholder="MWF / TTH" required />
+      </div>
+
+      <div class="form-group full-width">
+        <button type="submit" class="btn-primary">Add Schedule</button>
+      </div>
     </form>
 
     <table id="scheduleTable">
@@ -43,55 +236,68 @@
           <th>Action</th>
         </tr>
       </thead>
-      <tbody></tbody>
+      <tbody>
+        </tbody>
     </table>
 
-    <button onclick="location.href='index.html'">Back to Home</button>
+    <button class="btn-secondary" onclick="location.href='index.html'">Back to Home</button>
   </div>
 
-<script type="module">
-  import { saveSchedule, getSchedules, deleteSchedule } from "./js/main.js";
+  <script type="module">
+    // Assuming these exports exist in your js/main.js
+    import { saveSchedule, getSchedules, deleteSchedule } from "./js/main.js";
 
-  const form = document.getElementById("scheduleForm");
+    const form = document.getElementById("scheduleForm");
 
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const schedule = {
-      edp: form.edp.value,
-      teacher: form.teacher.value,
-      subject: form.subject.value,
-      room: form.room.value,
-      start: form.start.value,
-      end: form.end.value,
-      days: form.days.value,
-    };
-    saveSchedule(schedule);
-    form.reset();
-  });
-
-  function loadSchedules() {
-    const table = document.querySelector("#scheduleTable tbody");
-    getSchedules((schedules) => {
-      table.innerHTML = "";
-      schedules.forEach((s) => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-          <td>${s.edp}</td>
-          <td>${s.teacher}</td>
-          <td>${s.subject}</td>
-          <td>${s.room}</td>
-          <td>${s.start}</td>
-          <td>${s.end}</td>
-          <td>${s.days}</td>
-          <td><button onclick="deleteSchedule('${s.id}')">Delete</button></td>
-        `;
-        table.appendChild(row);
-      });
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const schedule = {
+        edp: form.edp.value,
+        teacher: form.teacher.value,
+        subject: form.subject.value,
+        room: form.room.value,
+        start: form.start.value,
+        end: form.end.value,
+        days: form.days.value,
+      };
+      saveSchedule(schedule);
+      form.reset();
     });
-  }
 
-  window.deleteSchedule = deleteSchedule;
-  loadSchedules();
-</script>
+    function loadSchedules() {
+      const table = document.querySelector("#scheduleTable tbody");
+      
+      // Assuming getSchedules uses a callback pattern
+      getSchedules((schedules) => {
+        table.innerHTML = "";
+        
+        if (!schedules || schedules.length === 0) {
+           table.innerHTML = `<tr><td colspan="8" style="text-align:center; color:#6b7280; padding:20px;">No schedules found.</td></tr>`;
+           return;
+        }
+
+        schedules.forEach((s) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${s.edp}</td>
+            <td>${s.teacher}</td>
+            <td>${s.subject}</td>
+            <td>${s.room}</td>
+            <td>${s.start}</td>
+            <td>${s.end}</td>
+            <td>${s.days}</td>
+            <td><button class="btn-delete" onclick="deleteSchedule('${s.id}')">Delete</button></td>
+          `;
+          table.appendChild(row);
+        });
+      });
+    }
+
+    // Expose deleteSchedule to the global window object so the onclick attribute works
+    window.deleteSchedule = deleteSchedule;
+    
+    // Initial Load
+    loadSchedules();
+  </script>
 </body>
 </html>
