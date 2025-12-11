@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Approved Sit-ins - Status Board</title>
+  <title>Sit-in Records</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   
   <style>
@@ -188,16 +188,6 @@
       font-size: 0.9rem;
     }
 
-    /* Status Dot */
-    .status-dot {
-      height: 8px;
-      width: 8px;
-      background-color: var(--success);
-      border-radius: 50%;
-      display: inline-block;
-      margin-right: 6px;
-    }
-
     @media (max-width: 600px) {
       .container { padding: 0 1rem; }
       .page-header h2 { font-size: 1.5rem; }
@@ -224,15 +214,15 @@
     
     <div class="page-header">
       <h2>Sit-in Records</h2>
-      <p>View currently active sessions and history logs.</p>
+      <p>View currently active sessions and historical logs.</p>
     </div>
 
-    <div id="loadingMsg">Loading sit-in data...</div>
+    <div id="loadingMsg">Loading records...</div>
 
     <div id="content" style="display: none;">
       
       <div class="section-title">
-        Currently Active
+        Current Sessions
         <span class="badge badge-live">Live</span>
       </div>
       
@@ -245,7 +235,7 @@
                 <th>Student Name</th>
                 <th>Year & Section</th>
                 <th>Room</th>
-                <th>Time In</th>
+                <th>Day</th> <th>Time In</th>
                 <th>Time Out</th>
                 <th>Purpose</th>
               </tr>
@@ -257,7 +247,7 @@
       </div>
 
       <div class="section-title">
-        Session History
+        Past Records
         <span class="badge badge-history">Archive</span>
       </div>
 
@@ -270,7 +260,7 @@
                 <th>Student Name</th>
                 <th>Year & Section</th>
                 <th>Room</th>
-                <th>Time In</th>
+                <th>Day</th> <th>Time In</th>
                 <th>Time Out</th>
                 <th>Purpose</th>
               </tr>
@@ -287,18 +277,17 @@
   <script type="module" src="js/approved.js" defer></script>
   
   <script>
-    // Simulation Script (Remove this if using real data fetch in approved.js)
-    // This just simulates data loading for the UI demo
+    // Simulation Script (Remove if using real backend)
     document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => {
             document.getElementById("loadingMsg").style.display = "none";
             document.getElementById("content").style.display = "block";
             
-            // Populate Empty State if needed (Example)
-            // Note: colspan is updated to 7 to match the new column count (Date removed)
+            // Empty State Logic
             const presentTableBody = document.querySelector("#presentTable tbody");
             if (presentTableBody && presentTableBody.children.length === 0) {
-               presentTableBody.innerHTML = `<tr><td colspan="7" class="empty-state">No active sit-ins at the moment.</td></tr>`;
+               // colspan is updated to 8 (7 previous + 1 for Day)
+               presentTableBody.innerHTML = `<tr><td colspan="8" class="empty-state">No active sessions found.</td></tr>`;
             }
         }, 800);
     });
