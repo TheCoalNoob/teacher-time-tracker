@@ -235,7 +235,7 @@
                 <th>Student Name</th>
                 <th>Year & Section</th>
                 <th>Room</th>
-                <th>Day</th> <th>Time In</th>
+                <th>Time In</th>
                 <th>Time Out</th>
                 <th>Purpose</th>
               </tr>
@@ -260,7 +260,7 @@
                 <th>Student Name</th>
                 <th>Year & Section</th>
                 <th>Room</th>
-                <th>Day</th> <th>Time In</th>
+                <th>Time In</th>
                 <th>Time Out</th>
                 <th>Purpose</th>
               </tr>
@@ -286,8 +286,8 @@
             // Empty State Logic
             const presentTableBody = document.querySelector("#presentTable tbody");
             if (presentTableBody && presentTableBody.children.length === 0) {
-               // colspan is updated to 8 (7 previous + 1 for Day)
-               presentTableBody.innerHTML = `<tr><td colspan="8" class="empty-state">No active sessions found.</td></tr>`;
+               // colspan is 7 to match current column count
+               presentTableBody.innerHTML = `<tr><td colspan="7" class="empty-state">No active sessions found.</td></tr>`;
             }
         }, 800);
     });
