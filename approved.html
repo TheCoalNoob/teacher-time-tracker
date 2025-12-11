@@ -241,13 +241,14 @@
           <table id="presentTable">
             <thead>
               <tr>
-                <th>Status</th>
                 <th>ID Code</th>
                 <th>Student Name</th>
-                <th>Year/Sec</th>
+                <th>Year & Section</th>
                 <th>Room</th>
-                <th>Time</th>
+                <th>Time In</th>
+                <th>Time Out</th>
                 <th>Purpose</th>
+                <th>Date</th>
               </tr>
             </thead>
             <tbody>
@@ -267,12 +268,13 @@
             <thead>
               <tr>
                 <th>ID Code</th>
-                <th>ID Code</th>
                 <th>Student Name</th>
-                <th>Year/Sec</th>
+                <th>Year & Section</th>
                 <th>Room</th>
-                <th>Time</th>
+                <th>Time In</th>
+                <th>Time Out</th>
                 <th>Purpose</th>
+                <th>Date</th>
               </tr>
             </thead>
             <tbody>
@@ -295,9 +297,10 @@
             document.getElementById("content").style.display = "block";
             
             // Populate Empty State if needed (Example)
+            // Note: colspan is updated to 8 to match the new column count
             const presentTableBody = document.querySelector("#presentTable tbody");
             if (presentTableBody && presentTableBody.children.length === 0) {
-               presentTableBody.innerHTML = `<tr><td colspan="7" class="empty-state">No active sit-ins at the moment.</td></tr>`;
+               presentTableBody.innerHTML = `<tr><td colspan="8" class="empty-state">No active sit-ins at the moment.</td></tr>`;
             }
         }, 800);
     });
