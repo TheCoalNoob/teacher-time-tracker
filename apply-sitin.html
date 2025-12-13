@@ -442,19 +442,18 @@
       }
     });
 
-    // Form Submission
-    form.addEventListener("submit", (e) => {
-      e.preventDefault(); 
-      showToast();
-      setTimeout(() => {
-        form.reset();
-      }, 1000);
-    });
-
     function showToast() {
       toast.className = "show";
       setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
     }
+
+    // Make toast callable from apply-sitin.js
+  window.showToast = function (msg = "✅ Application Submitted Successfully!") {
+    const toast = document.getElementById("toast");
+    toast.innerHTML = `<span>✅</span> ${msg}`;
+    toast.className = "show";
+    setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
+  };
   </script>
 </body>
 </html>
